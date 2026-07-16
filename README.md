@@ -40,13 +40,13 @@ SQLite are bundled inside the single file.
 Requires the .NET 8 SDK.
 
 ```
-dotnet publish -c Release
+dotnet publish src/IT04Form -c Release
 ```
 
 The single-file exe is produced at:
 
 ```
-bin\Release\net8.0-windows\win-x64\publish\IT04-1Form.exe
+src\IT04Form\bin\Release\net8.0-windows\win-x64\publish\IT04-1Form.exe
 ```
 
 No extra CLI flags are needed — the publish settings (self-contained,
@@ -80,11 +80,22 @@ automatically the next time the app starts.
 
 ## Project structure
 
-- `Program.cs` — entry point; initializes the database, runs `MainForm`.
-- `MainForm.cs` — the registration form (the 8 fields, validation, Save/Clear).
-- `RecordsForm.cs` — the Saved Records window.
-- `Db.cs` — SQLite access (init, insert, list).
-- `Validation.cs` — field validation rules.
-- `ImageUtil.cs` — Base64 data URL ⇄ `Image` conversion.
-- `Models.cs` — `Person` / `PersonInput` types.
-- `Constants.cs` — occupation list, sex options, messages, field keys.
+```
+IT04Form.sln
+src/IT04Form/
+├── IT04Form.csproj
+├── Program.cs          entry point; initializes the DB, runs MainForm
+├── Models/
+│   ├── Person.cs       a row of the persons table
+│   └── PersonInput.cs  raw form values, pre-validation
+├── Core/
+│   ├── Constants.cs    occupation list, sex options, messages, field keys
+│   └── Validation.cs   field validation rules
+├── Data/
+│   └── Db.cs           SQLite access (init, insert, list)
+├── Imaging/
+│   └── ImageUtil.cs    Base64 data URL ⇄ Image conversion
+└── UI/
+    ├── MainForm.cs     the registration form (8 fields, validation, Save/Clear)
+    └── RecordsForm.cs  the Saved Records window
+```
